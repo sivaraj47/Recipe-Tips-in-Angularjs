@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Myportfolio</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>  
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+ 
+ <style>
+ body{
+ 
+  font-family: "Poppins", serif;
+ }
+ <!-- .Rcontainer{
+ display:grid;
+ grid-template-columns: 250px  250px 250px 250px 250px;
+  width:100%;
+  font-family: "Poppins", serif;
+ } -->
+ .Rcontainer{
+ display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  font-family: "Poppins", serif;
+  margin-bottom:60px;
+ } 
+ .rbox{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ color:#000;
+ border:1px solid #ddd;
+ border-radius:10px; 
+ padding:10px 20px;
+ margin:10px; 
+ text-decoration:none;
+ width:250px;
+ height:500px;
+ }
+ .rboxc{
+  display:flex;
+ flex-direction:column;
+ align-items:center;
+ color:#000;
+ border:1px solid #ddd;
+ border-radius:10px; 
+ padding:10px 20px;
+ margin:10px; 
+ text-decoration:none;
+ width:250px;
+ height:300px;
+ }
+ .rboxc img{
+  overflow:hidden;
+  height:190px;;
+  width:100%; 
+  border-radius:20px;
+  object-fit:cover;
+ }
+ .rbox img{
+  overflow:hidden;
+  height:190px;;
+  width:100%; 
+  border-radius:20px;
+  object-fit:cover;
+ }
+ a {
+    text-decoration: none;
+}
+ .search{
+ width:800px;
+ margin:auto; 
+ }
+ .searchbox{ 
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 10px;
+	border: 1px solid #aaa;
+ }
+ .desc{
+ overflow-y:scroll;
+ overflow-x:hidden;
+ height:200px;
+ scrollbar-width:thin;
+ }
+ .list-category{ 
+ display:flex;
+ flex-wrap:wrap;
+ align-items:center;
+ padding:10px;
+     width: 100%;
+ }
+ button.cbox {
+    border: none;
+    background: #f7f7f7;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 5px;
+    font-family: 'Poppins';
+    border: 1px solid #aaa;
+}
+button.cbox:hover {
+    background: #f8691c;
+}
+.sbx {
+    height: 200px;
+    padding: 70px 0px;
+}
+ nav.menu {
+    display: flex;
+    justify-content: space-around;
+    background: #f8691c;
+	align-items: center;
+	box-shadow: 0px 3px 8px #9999;
+	border-bottom-right-radius:10px;
+	border-bottom-left-radius:10px;
+}
+nav ul li{
+
+list-style:none;
+}
+.footers{
+display: flex;
+    justify-content: space-around;
+	flex-wrap:wrap;
+}
+.footer{
+
+    padding: 10px;
+    position: fixed;
+    bottom: 0px;
+    background: #ddd;
+    width: 100%;
+}
+a.btn-light {
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+@media(max-width:768px){
+.search {
+    width: 100%;
+    margin: auto;
+}
+.sbx {
+    height:100%;
+    padding: 70px 0px;
+}
+}
+ </style>
+</head>
+<body >
+<!-- <h1>{{name}}</h1>
+<p>{{bios}}</p>
+<div>
+<h1>{{projects.name}}</h1>
+<h2>{{projects.company}}</h2>
+<h3>{{projects.bio}}</h3>
+<h4>{{projects.location}}</h4>
+<p>{{projects.url}}</p>
+<img ng-src="{{ projects.avatar_url }}" alt="Profile Image" width="50">
+
+ -->
+
+
+<div ng-controller="myPort">
+
+   <nav class="menu">
+   <a ng-href=""><h1>MyRecipeTips</h1></a>
+    <ul>
+	 <li><a href="https://codingwithssr.vercel.app/" target="_blank" class="btn-light">CONTACT</a></li>
+	</ul>   
+   
+   </nav>
+ 
+<div class="search sbx" >
+<h3>Find Your Favourite Recipes in Hands ! </h3>
+<input type="text" ng-model="searchQuery" placeholder="Search Recipe..." class="searchbox" ng-change="searchFood()">
+<!-- <p class="error" ng-show="searchError">Please enter a meal name before searching.</p>
+ -->
+  <div class="list-category">
+<button ng-repeat="category in categories" ng-click="filterCategory(category.strCategory)" class="cbox">{{category.strCategory}}</button>
+</div>
+ 
+ 
+ </div>
+<!-- <button ng-click="searchFood()">Search</button>
+ -->
+
+
+	<div class="Rcontainer">
+		<div  ng-repeat="meal in meals">
+		<a ng-href="meal.html?id={{meal.idMeal}}" target="_blank">
+			<div class="rbox" ng-show="Searchdefault">
+			 <h4>{{meal.strMeal}} </h4>
+			 <img ng-src="{{meal.strMealThumb}}" >
+				<div class="">
+				<p class="desc">{{meal.strInstructions}}</p>
+				</div>
+			</div>
+			<div class="rboxc" ng-show="CategoryDefault">
+			 <h4>{{meal.strMeal}} </h4>
+			 <img ng-src="{{meal.strMealThumb}}" >
+				<div class="" ng-show="desc">
+				<p class="desc">{{meal.strInstructions}}</p>
+				</div>
+			</div>
+		</a>
+		</div>
+		
+		
+	</div>
+</div>
+
+<footer class="footer">
+<div class="footers">
+<span>@copyrights 2025 - codingwithssr</span>
+<span>Contact</span>
+</div>
+</footer>
+
+
+<script>
+var app =  angular.module("myApp",[]);
+
+app.controller("myPort", function($scope, $http){
+
+$scope.name="Myportfolio SSR"; 
+ 
+$scope.bios="I am webdeveloper specializing in Angularjs";
+
+ $scope.meal = {};
+$scope.searchQuery = "";
+$scope.selectedMeal={};
+ $scope.desc = false;
+  $scope.Searchdefault = false;
+  $scope.CategoryDefault = false;
+ $scope.searchError = false;
+
+
+
+   //var apiKey = 'd3fb9f5dfb6049c498d79113ef4a4f37'; // Replace with your NewsAPI key
+   //var apiUrl = 'https://newsapi.org/v2/everything?q=bitcoin&from=2025-01-13&sortBy=publishedAt&apiKey='+ apiKey;
+ 
+$http.get('https://api.github.com/users/sivaraj47')
+    .then(function(response) {
+        console.log("Projects Data:", response.data);
+        $scope.projects = response.data;
+    })
+   
+    .catch(function(error) {
+        console.error("Error loading projects:", error);
+    });
+	
+	/*$scope.searchFood=function() {	
+		if($scope.searchQuery){
+		
+			$http.get('https://www.themealdb.com/api/json/v1/1/search.php?s=' + $scope.searchQuery )
+			  .then(function(response){
+						 if(response.data.meals){	
+							$scope.meals = response.data.meals;
+						 }
+						 else{
+							 $scope.meals = [];				 
+						 }		
+			   });	
+		}	
+	};*/
+	$scope.searchFood = function(){
+			
+		 $http.get('https://www.themealdb.com/api/json/v1/1/search.php?s=' + $scope.searchQuery)
+			 .then(function(response){
+			  if(response.data.meals){
+                 $scope.meals = response.data.meals;		  
+			      $scope.desc = true;
+				  $scope.Searchdefault = true;
+				   $scope.CategoryDefault = false;
+				  
+			  }else{
+			    $scope.meals=[];
+			  }			 
+			 });
+	};
+
+	$scope.filterCategory=function(category){
+	
+		   $http.get('https://www.themealdb.com/api/json/v1/1/filter.php?c=' + category)
+		    .then(function(response){
+			   if(response.data.meals){
+			      $scope.meals = response.data.meals;
+				  $scope.desc = false;
+				   $scope.Searchdefault = false;
+				   $scope.CategoryDefault = true;
+				  }
+				  else{
+				  $scope.meals=[];
+				  
+				  }
+			});
+	 
+	};
+	
+	$http.get('https://www.themealdb.com/api/json/v1/1/categories.php')
+	  .then(function(response){
+	    if(response.data.categories){
+		
+		  $scope.categories = response.data.categories;
+		} 
+	  });
+	
+});
+
+</script>
+</body>
+</html>
